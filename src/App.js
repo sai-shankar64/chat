@@ -22,20 +22,21 @@ class App extends Component {
 	}
 
 	addEvent(from, message) {
-		this.setState({ list: this.state.list.concat([{ from: from, message: message }]) })
+		this.setState({ list: this.state.list.concat([{ from: from, message: message, id: this.state.list.length + 1 }]) })
 	}
 
 	sendclientmessage(data) {
-		console.log(data);
 		this.connection.send(JSON.stringify({ message: data }));
 	}
 
 	handleClick() {
-		this.setState({ message: this.state.input });
 		var message = this.refs.input.value;
-		this.refs.input.value = "";
-		this.addEvent("Client", message);
-		this.sendclientmessage(message);
+		message = message.trim();
+		if (message !== "" && message !== null) {
+			this.refs.input.value = "";
+			this.addEvent("Client", message);
+			this.sendclientmessage(message);
+		}
 	}
 
 	onKeyPress = (e) => {
@@ -49,8 +50,8 @@ class App extends Component {
 			<div className="App">
 				<div>
 					{
-						this.state.list.length != 0 && this.state.list.map((res) => (
-							<Message from={res.from} message={res.message} />
+						this.state.list.length !== 0 && this.state.list.map((res) => (
+							<Message from={res.from} message={res.message} key={res.id} />
 						))
 					}
 				</div>

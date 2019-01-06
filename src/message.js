@@ -9,7 +9,7 @@ class Message extends Component {
 	render() {
 		return (
 			<div>
-                <div><strong>{this.from}</strong> : { this.props.message}</div>
+                <pre><strong>{this.from}</strong> : {this.message}</pre>
             </div>
 		);
 	}
